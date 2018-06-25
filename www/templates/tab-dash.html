@@ -1,0 +1,26 @@
+<ion-view view-title="Dashboard">
+	<ion-content class="padding">
+		<div class="item">
+			<label for="lines">
+				Line
+			</label>
+			<select class="select" id="lines" name="lines" ng-options="line.DisplayName for line in lines" ng-model="selectedLine" ng-change="setSelectedLine(selectedLine)"></select>
+		</div>
+		<div class="item">
+			<label for="stations">
+				Station
+			</label>
+			<select id="stations" name="stations" ng-options="station.Name for station in stations | filter:stationsByLine" ng-model="selectedStation"></select>
+		</div>
+		<ion-list>
+			<ion-item class="list card" ng-repeat="train in trains | orderBy:'Line' | orderBy:'Min' | filter:{LocationCode:selectedStation.Code} | filter:{Line:selectedLine.LineCode}">
+			  <div class="item item-divider">{{train.Line}} to {{train.DestinationName}}</div>
+			  <div class="item item-body">
+				<div>
+				  {{train.Min}} minutes
+				</div>
+			  </div>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>
